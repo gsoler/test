@@ -1,5 +1,5 @@
 # Content:
-- [test](https://github.com/gsoler/test#readme#test)
+- require "test"
 - [test-client](https://github.com/gsoler/test#readme#test-client)
 
 # test
