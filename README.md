@@ -1,6 +1,6 @@
 # Content:
-- require "test"
-- [test-client](https://github.com/gsoler/test#readme#test-client)
+- [test](#test)
+- [test-client](#test-client)
 
 # test
 
