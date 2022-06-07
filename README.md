@@ -1,6 +1,6 @@
 # Content:
-- [test](https://github.com/gsoler/test/edit/master/README.md#test)
-- [test-client](https://github.com/gsoler/test/edit/master/README.md#test-client)
+- [test](https://github.com/gsoler/test#readme#test)
+- [test-client](https://github.com/gsoler/test#readme#test-client)
 
 # test
 
