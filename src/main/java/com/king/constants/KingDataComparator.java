@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.king.dto.KingData;
+import com.king.persistence.domain.KingData;
 
 public class KingDataComparator {
 

@@ -5,7 +5,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
-import com.king.repository.IKingRepository;
+import com.king.persistence.IKingRepository;
 
 @Component
 public class CacheInit implements ApplicationListener<ApplicationReadyEvent> {
