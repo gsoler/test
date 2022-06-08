@@ -2,6 +2,7 @@ package com.king.service;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,6 +13,7 @@ import com.king.constants.KingDataComparator;
 import com.king.constants.KingDataStatus;
 import com.king.constants.SortDirection;
 import com.king.persistence.IKingRepository;
+import com.king.persistence.domain.KingData;
 import com.king.persistence.domain.KingDataOutput;
 import com.king.web.dto.KingDataDto;
 import com.king.web.dto.KingDataResponse;
@@ -51,33 +53,11 @@ public class KingService implements IKingService {
 		}
 
 		KingDataOutput outputData = kingRepository.readServerData();
-		List<KingDataDto> kingDataList = outputData.getOutput().stream().filter(kingData -> {
-			boolean filterOk = true;
-			if (name != null && name.length() > 0) {
-				filterOk = kingData.getName().toLowerCase().contains(name.toLowerCase());
-			}
-			if (status != null) {
-				filterOk = filterOk && kingData.getStatus().equals(status);
-			}
-			return filterOk;
-		})
-			.sorted(SortDirection.ASC.equals(sortDirection) ? KingDataComparator.FIELD_COMPARATOR.get(sortField)
-					: KingDataComparator.FIELD_COMPARATOR.get(sortField).reversed())
-			.map(kingData -> {
-				KingDataDto returnObject = KingDataDto.builder()
-					.id(kingData.getId())
-					.name(kingData.getName())
-					.description(kingData.getDescription())
-					.delta(kingData.getDelta())
-					.build();
-				if (kingData.getStatus() != null) {
-					returnObject.setStatus(kingData.getStatus().label());
-				}
-				if (kingData.getCreatedOn() != null) {
-					returnObject.setCreatedOn(kingData.getCreatedOn().format(RETURN_DATE_FORMATTER));
-				}
-				return returnObject;
-			})
+		List<KingDataDto> kingDataList = outputData.getOutput()
+			.stream()
+			.filter(kingData -> filter(kingData, name, status))
+			.sorted(getComparator(sortField, sortDirection))
+			.map(kingData -> mapKingDataToDto(kingData))
 			.collect(Collectors.toList());
 
 		Integer pageOffset = (page - 1) * pageSize;
@@ -93,6 +73,43 @@ public class KingService implements IKingService {
 				.setResultList(kingDataList.subList(pageOffset, Math.min(pageOffset + pageSize, kingDataList.size())));
 		}
 		return response;
+	}
+
+	private boolean filter(KingData kingData, String name, KingDataStatus status) {
+		boolean filterOk = true;
+		if (name != null && name.length() > 0) {
+			filterOk = kingData.getName().toLowerCase().contains(name.toLowerCase());
+		}
+		if (status != null) {
+			filterOk = filterOk && kingData.getStatus().equals(status);
+		}
+		return filterOk;
+	}
+
+	private Comparator<KingData> getComparator(String sortField, SortDirection sortDirection) {
+		Comparator<KingData> response;
+		if (SortDirection.ASC.equals(sortDirection)) {
+			response = KingDataComparator.FIELD_COMPARATOR.get(sortField);
+		} else {
+			response = KingDataComparator.FIELD_COMPARATOR.get(sortField).reversed();
+		}
+		return response;
+	}
+
+	private KingDataDto mapKingDataToDto(KingData kingData) {
+		KingDataDto returnObject = KingDataDto.builder()
+			.id(kingData.getId())
+			.name(kingData.getName())
+			.description(kingData.getDescription())
+			.delta(kingData.getDelta())
+			.build();
+		if (kingData.getStatus() != null) {
+			returnObject.setStatus(kingData.getStatus().label());
+		}
+		if (kingData.getCreatedOn() != null) {
+			returnObject.setCreatedOn(kingData.getCreatedOn().format(RETURN_DATE_FORMATTER));
+		}
+		return returnObject;
 	}
 
 }
