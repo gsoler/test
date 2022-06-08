@@ -1,6 +1,6 @@
 # test
 
-This part is the server application developed in Java and using Spring Boot 2.7.0. To run the server application you have to run StartApplication.java.
+This part is the server application developed in Java 8 and using Spring Boot 2.7.0. To run the server application you have to run StartApplication.java.
 The application imports next dependencies:
 - Spring Boot Starter Web to create the API.
 - Spring Boot Starter Validation to validate the request of the API.
