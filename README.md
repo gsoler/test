@@ -17,4 +17,7 @@ The application is based in 3 layers:
 - Business: The service who manages the request and returns the required processed data to the controller.
 - Presentation: The service ho declares the API and checks the input request data.
 
-To execute the tests you have to run TestingApplication.java, it will check different cases in the API.
+There are 3 files to test the application, each one for a layer. You have:
+- PersistenceTest
+- ServiceTest
+- WebTest
