@@ -8,6 +8,7 @@ The application imports next dependencies:
 - Spring Boot Security to allow Cross-Domain connections from client. 
 - Gson to parse the read JSON.
 - Lombok to make objects cleaner avoiding getters and setters functions declarations.
+- Mockito to create mock for tests.
 
 IMPORTANT: to make project compiles with Lombok Getters and Setters, you need to install a plugin in Eclipse or STS from https://projectlombok.org/p2
 
